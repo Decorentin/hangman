@@ -1,1 +1,0 @@
-{"Word":"n_pp__on_","ToFind":"napperon\r","Attempts":8,"Input":"STOP","TabInput":["o","n","o","o","o","p"],"Won":false,"OneLetter":false,"StopGame":false,"GameRestart":false}
