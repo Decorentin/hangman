@@ -13,6 +13,6 @@ func HelpMenu(data *HangManData) {
 	fmt.Println("If you want to save, write STOP. To load the backup, write: ")
 	fmt.Println("go run main/main.go --startWith save.txt")
 	fmt.Println()
-	fmt.Println("Enjoy!")
+	fmt.Println("Enjoy!!")
 	fmt.Println()
 }
