@@ -5,22 +5,26 @@ import (
 	"strings"
 )
 
-// function that calculates the number of letters to be revealed and prints the word with the revealed letters and "_".
-func RandomLetters(words string) string {
-	numbreveal := (len(words) / 2) - 1
-	tabword := make([]string, len(words))
-	for i := range tabword {
-		tabword[i] = "_"
+// Replace a random set of letters in the word with "_"
+func RandomLetters(word string) string {
+	numToReveal := (len(word) / 2) - 1
+	revealedIndices := make(map[int]bool)
+
+	// Generate unique random indices to reveal
+	for len(revealedIndices) < numToReveal {
+		index := rand.Intn(len(word))
+		revealedIndices[index] = true
 	}
-	for i := 0; i < numbreveal; i++ {
-		max := len(words) - 1
-		indexrandomword := rand.Intn(max)
-		randomletter := string(words[indexrandomword])
-		for j := 0; j < len(words); j++ {
-			if string(words[j]) == randomletter {
-				tabword[j] = randomletter
-			}
+
+	// Create the partially revealed word
+	var result strings.Builder
+	for i, char := range word {
+		if revealedIndices[i] {
+			result.WriteRune(char)
+		} else {
+			result.WriteRune('_')
 		}
 	}
-	return strings.Join(tabword, "")
+
+	return result.String()
 }
