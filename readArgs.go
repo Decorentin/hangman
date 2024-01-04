@@ -21,7 +21,7 @@ func ReadArgs(data *HangManData) {
 		GameBoucle(data)
 	} else { //else the game launches normally
 		RandomWord()
-		RandomLetters(data.Word)
+		RandomLetters(data)
 		UserInterface(data)
 	}
 }

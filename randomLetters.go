@@ -2,29 +2,32 @@ package hangmanpackage
 
 import (
 	"math/rand"
-	"strings"
 )
 
-// Replace a random set of letters in the word with "_"
-func RandomLetters(word string) string {
-	numToReveal := (len(word) / 2) - 1
-	revealedIndices := make(map[int]bool)
-
-	// Generate unique random indices to reveal
-	for len(revealedIndices) < numToReveal {
-		index := rand.Intn(len(word))
-		revealedIndices[index] = true
+// function that calculates the number of letters to be revealed and prints the word with the revealed letters and "_".
+func RandomLetters(data *HangManData) {
+	nRandomLetters := (len(data.ToFind) / 2) - 1
+	var tabLetters []string
+	var word string
+	for i := 0; i < len(data.ToFind); i++ {
+		word += "_"
 	}
-
-	// Create the partially revealed word
-	var result strings.Builder
-	for i, char := range word {
-		if revealedIndices[i] {
-			result.WriteRune(char)
-		} else {
-			result.WriteRune('_')
+	i := 0
+	for i < nRandomLetters {
+		randomIndex := rand.Intn(len(data.ToFind)) //choose random letters in the word
+		randomLetter := string(data.ToFind[randomIndex])
+		data.TabInput = append(data.TabInput, randomLetter)
+		found := 0
+		for _, letter := range tabLetters {
+			if letter == randomLetter {
+				found = 1 //Set 'found' to 1 if the letter is found in 'tabLetters
+			}
+		}
+		if found != 1 {
+			tabLetters = append(tabLetters, randomLetter) // replace the corresponding "_" in 'word',
+			word = ReplaceLetter(data.ToFind, word, randomLetter)
+			i++
 		}
 	}
-
-	return result.String()
+	data.Word = word
 }
