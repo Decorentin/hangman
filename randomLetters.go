@@ -5,7 +5,7 @@ import (
 )
 
 // function that calculates the number of letters to be revealed and prints the word with the revealed letters and "_".
-func RandomLetters(data *HangManData) {
+func RandomLetters(data *HangManData) string {
 	nRandomLetters := (len(data.ToFind) / 2) - 1
 	var tabLetters []string
 	var word string
@@ -30,4 +30,5 @@ func RandomLetters(data *HangManData) {
 		}
 	}
 	data.Word = word
+	return word
 }
