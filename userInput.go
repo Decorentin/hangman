@@ -6,60 +6,54 @@ import (
 )
 
 // function that manages user input
-func UserInput(data *HangManData) {
+func UserInput(input string, toFind string, word string, attempts int, tabInput []string, won bool, stopGame bool) (string, int, []string, bool, bool) {
 	fmt.Print("Choose: ")
-	_, err := fmt.Scan(&data.Input) //scan user input
+	_, err := fmt.Scan(&input) // scan user input
 	if err != nil {
-		fmt.Println("Erreur de lecture de l'entrée :", err)
-		return
+		fmt.Println("Error reading input:", err)
+		return word, attempts, tabInput, won, stopGame
 	}
-	if data.Input == "STOP" { //if input is STOP, game is save in "save.txt"
-		saveGame("save.txt", *data)
-		fmt.Println("Game Saved in save.txt.")
-		data.StopGame = true
-		return
-	}
-	if data.Input == "QUIT" { //if input is QUIT, game is over
-		fmt.Println("You've decided to stop playing")
-		data.StopGame = true
-		return
-	}
-	if len(data.Input) > 1 { //if input is > 1, func SuggestWord
-		SuggestWord(data)
+
+	var oneLetter bool
+	if len(input) > 1 { // if input is > 1, func SuggestWord
+		attempts, oneLetter, won = SuggestWord(input, toFind, attempts, oneLetter, won)
 	} else {
-		data.OneLetter = true
+		oneLetter = true
 	}
-	if len(data.Input) < 1 { //if input < 1, error message
-		fmt.Println("Please enter a letter or word")
-	}
-	checkletter := strings.Contains(data.ToFind, data.Input) //check if letter input is in the word
-	if !data.Won && data.OneLetter {
-		if LetterAlreadyUsed(data) { //checks if the letter input has already been used
+
+	checkletter := strings.Contains(toFind, input) // check if the letter input is in the word
+
+	if !won && oneLetter {
+		if LetterAlreadyUsed(tabInput, input) { // checks if the letter input has already been used
 			fmt.Println("Error: you have already proposed this letter")
 			fmt.Println()
-			fmt.Println(data.Word)
+			fmt.Println(word)
 			fmt.Println()
-			return
+			return word, attempts, tabInput, won, stopGame
 		}
-		data.TabInput = append(data.TabInput, data.Input) //adds the letter input to the sutilised letter table
+
+		tabInput = append(tabInput, input) // adds the letter input to the used letter table
+
 		if checkletter {
 			result := ""
-			for i := 0; i < len(data.ToFind); i++ { //adds the letter input to the word
-				if string(data.ToFind[i]) == data.Input {
-					result += data.Input
+			for i := 0; i < len(toFind); i++ { // adds the letter input to the word
+				if string(toFind[i]) == input {
+					result += input
 				} else {
-					result += string(data.Word[i])
+					result += string(word[i])
 				}
 			}
-			data.Word = result
+			word = result
 		} else {
-			data.Attempts--
-			fmt.Printf("Not present in the word, %d attempts remaining\n", data.Attempts) //Attempts - 1 if the letter input is not in the word
-			HangmanPositions(data)
+			attempts--
+			fmt.Printf("Not present in the word, %d attempts remaining\n", attempts) // Attempts - 1 if the letter input is not in the word
 		}
 	}
-	if checkletter && !data.Won && data.OneLetter { //print the word (the actual word not the one to find) if the game is not won
-		fmt.Println(data.Word)
+
+	if checkletter && !won && oneLetter { // print the word (the actual word, not the one to find) if the game is not won
+		fmt.Println(word)
 		fmt.Println()
 	}
+
+	return word, attempts, tabInput, won, stopGame
 }
