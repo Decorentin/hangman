@@ -13,6 +13,5 @@ func ReplaceLetter(word, currentWord, letter string) string {
 	if len(currentWord) > len(word) {
 		result += currentWord[len(word):]
 	}
-
 	return result
 }

@@ -1,6 +1,7 @@
 package hangmanpackage
 
 import (
+	"fmt"
 	"math/rand"
 	"strings"
 )
@@ -22,5 +23,6 @@ func RandomLetters(words string) string {
 			}
 		}
 	}
+	fmt.Println(strings.Join(tabword, ""))
 	return strings.Join(tabword, "")
 }
