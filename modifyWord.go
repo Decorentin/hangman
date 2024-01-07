@@ -14,12 +14,9 @@ func ModifyWord(wordtofind, actualword, letter string) string {
 				actualword = actualword[:i] + letter + actualword[i+1:]
 			}
 		}
-
-		fmt.Println("Dans le mot")
+		fmt.Println(actualword)
 		return actualword
 	}
-
-	// Si la lettre n'est pas dans le mot, retourne le mot inchangé
-	fmt.Println("Pas dans le mot")
+	fmt.Println(actualword)
 	return actualword
 }
