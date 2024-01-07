@@ -1,7 +1,7 @@
 package hangmanpackage
 
 // Replace the letter of the partially filled word with the chosen letter if it is in the word
-func ReplaceLetter(word, currentWord, letter string, attempts int) (string, bool) {
+func ReplaceLetter(word, currentWord, letter string) (string, bool) {
 	result := ""
 	inTheWord := false
 
