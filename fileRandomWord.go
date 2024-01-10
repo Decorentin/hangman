@@ -8,7 +8,7 @@ import (
 )
 
 // function to generate a random word in the file specified by the user
-func fileRandomWord(file string) string {
+func FileRandomWord(file string) string {
 	content, err := os.ReadFile(file) //opens user-selected txt
 	if err != nil {
 		log.Fatal(err)
